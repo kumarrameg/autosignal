@@ -7,7 +7,7 @@
 <script>
   (function () {
     currdate = new Date();
-    if (currdate.getHours() > 10 && currdate.getHours() < 12) {
+    if (currdate.getHours() > 0 && currdate.getHours() < 2) {
       ram("PUT", 0);
       $(".details").prepend(
         "<br>Triggered :" +
