@@ -16,7 +16,7 @@
     }
     console.log(currdate.getHours());
 
-    setTimeout(arguments.callee, 1000 * 30);
+    setTimeout(arguments.callee, 1000 *60 * 30);
   })();
   let genputsignal = "";
   var listBestPairTimesbackup = [];
