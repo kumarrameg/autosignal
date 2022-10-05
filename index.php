@@ -3,7 +3,7 @@
 <meta http-equiv="Expires" content="0" />
 <h2 class="details" style="color: red"></h2>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<!-- <h1 id="displaysignal"></h1> -->
+<h1 id="displaysignal"></h1>
   <script> 
 
   (function () {
@@ -46,6 +46,7 @@
       }else{
         /* normal market */
         var listPairs = ["EUR_USD", "EUR_GBP"];
+        // var listPairs = ["EUR_USD"];
         var headtingOwn="";
 
         // console.log(listPairs+"  "+headtingOwn);
@@ -57,11 +58,13 @@
       var percentageMax = 100;
       var candleTime = "M5";
       var daysAnalyse = 10;
+      var volume=800;
       var martingales = 0;
       var orderType = "CALL";
       var timeInit = 6;
       var timeEnd = 17;
       var cbAtivo=0;
+
       
 
       var requestNumber = 0;
@@ -159,7 +162,8 @@
                 "Bearer 9786b2c10d1d20bfb034e37b87dae62e-9a1ff57d6a09466907da1e65a6c7353d",
             },
             type: "GET",
-            success: function (result) {                     
+            success: function (result) {     
+
               CalculateHistoric(result);
             },
             error: function (error) {
@@ -174,11 +178,13 @@
         for (var i = 0; i < candles.length; i++) {
           var candle = candles[i];
 
+          
           var item = new Object();
           item.resultValue = candle.mid.o - candle.mid.c;
           item.date = ConvertDate(candle.time);
           item.result = GetStringResult(item.resultValue);
           item.percentDif = (item.resultValue * 100) / candle.mid.o;
+          item.volume=candle.volume;
           
           if (item.result === orderType ) {
             item.win = true;
@@ -197,9 +203,10 @@
             continue;
           }
           candlesResult.push(item);
+          
         }
         
-        
+        // console.log(candlesResult);
         var timeGroupedCandles = Array.from(
           new Set(candlesResult.map((s) => s.date.time))
           ).map((time) => {
@@ -207,38 +214,43 @@
               time: time,
               candles: candlesResult.filter((s) => s.date.time === time),
               pair: result.instrument,
+              // volume: candlesResult.volume,
             };
           });
 
           
         for (var i = 0; i < timeGroupedCandles.length; i++) {
           var currentGroup = timeGroupedCandles[i];
-
-          currentGroup.winrate = 0;
+          currentGroup.winrate = 0;          
+          currentGroup.volume = 0;          
           currentGroup.averageTickDif = 0;
           for (var z = 0; z < currentGroup.candles.length; z++) {
             var candle = currentGroup.candles[z];
-
             if (candle.win == true) {
+              currentGroup.volume+= candle.volume;
               currentGroup.winrate++;
               currentGroup.averageTickDif += item.percentDif;
             }
           }
-          currentGroup.averageTickDif =
-            currentGroup.averageTickDif / currentGroup.winrate;
+          currentGroup.volume=currentGroup.volume/3;
 
+          currentGroup.averageTickDif =
+            currentGroup.averageTickDif / currentGroup.winrate;            
           currentGroup.winrate =
             (currentGroup.winrate * 100) / currentGroup.candles.length;
 
           if (
             currentGroup.winrate >= percentageMin &&
-            currentGroup.winrate <= percentageMax
+            currentGroup.winrate <= percentageMax &&
+            currentGroup.volume >= volume
           ) {
             listBestPairTimes.push(currentGroup);
             continue;
           }
         }
+        
         requestNumber--;
+        console.log(listBestPairTimes);
         if (requestNumber == 0) {
          return DownloadTxt();
         }
@@ -318,26 +330,26 @@
         
 
         
-        // var obj = $("#displaysignal").text(stringList2);
-        // obj.html(obj.html().replace(/\n/g,'<br/>'));
+        var obj = $("#displaysignal").text(stringList2);
+        obj.html(obj.html().replace(/%0a/g,'<br/>'));
 
-        var xhttp = new XMLHttpRequest();
-      xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-          // Typical action to be performed when the document is ready:
-          var response = xhttp.responseText;
-          console.log("ok" + response);
-        }
-      };
-      xhttp.open(
-        "GET",
-        "https://api.telegram.org/bot5455276964:AAFLB-A_Jc88A7ZlPQoN7CF6utmKu8QoO-E/sendMessage?chat_id=@purpleplusram&text=" +
-          stringList2,
-        true
-      );
+      //   var xhttp = new XMLHttpRequest();
+      // xhttp.onreadystatechange = function () {
+      //   if (this.readyState == 4 && this.status == 200) {
+      //     // Typical action to be performed when the document is ready:
+      //     var response = xhttp.responseText;
+      //     console.log("ok" + response);
+      //   }
+      // };
+      // xhttp.open(
+      //   "GET",
+      //   "https://api.telegram.org/bot5455276964:AAFLB-A_Jc88A7ZlPQoN7CF6utmKu8QoO-E/sendMessage?chat_id=@purpleplusram&text=" +
+      //     stringList2,
+      //   true
+      // );
 
-      xhttp.send();
-      localStorage.clear();
+      // xhttp.send();
+      // localStorage.clear();
        
       }
       
@@ -386,4 +398,4 @@
 
    
     </script>
-
+</html>
