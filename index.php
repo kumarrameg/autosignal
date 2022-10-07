@@ -45,7 +45,8 @@
         // console.log(listPairs+"  "+headtingOwn);
       }else{
         /* normal market */
-        var listPairs = ["EUR_USD", "EUR_GBP"];
+        var listPairs = ["EUR_USD", "EUR_GBP","GBP_USD"];
+
         // var listPairs = ["EUR_USD"];
         var headtingOwn="";
 
@@ -295,7 +296,10 @@
                 arrayTime[z] = "000";
               }
             }
-
+            
+             if(candle.time <= "09:30:00" && candle.pair == "GBP_USD"){
+              continue;
+            }
             
             // stringList2 += "%0a";
             stringList2 += "%0a";
@@ -308,7 +312,8 @@
             //ENTRADA
             //  stringList2 += candle.pair+",";listBestPairTimes[0].candles[0].result
             
-            stringList2 += candle.candles[0].result;
+            stringList2 += candle.candles[0].result+"-";
+            stringList2 += parseInt(candle.volume);
             
             
             
