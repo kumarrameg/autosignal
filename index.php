@@ -40,8 +40,9 @@
       var todayOwn = new Date();
       if(todayOwn.getDay() == 6 || todayOwn.getDay() == 0) {
         /* OTC */
-        var listPairs = ["EUR_USD", "GBP_USD"];
-        var headtingOwn="-OTC";
+        return false;
+//         var listPairs = ["EUR_USD", "GBP_USD"];
+//         var headtingOwn="-OTC";
         // console.log(listPairs+"  "+headtingOwn);
       }else{
         /* normal market */
