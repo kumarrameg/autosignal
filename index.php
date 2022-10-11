@@ -338,7 +338,6 @@
             success: function (result) {     
               if(result == true){
                 
-                stringList2 +="%0a%0a" +candleTime + "%0a" + day + headtingOwn + ":%0a%0a" + "PROFIT:%0a%0a";
                 var xhttp = new XMLHttpRequest();                  
                   xhttp.open(
                     "GET",
