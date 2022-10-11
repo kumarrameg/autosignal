@@ -9,7 +9,7 @@
   (function () {
     currdate = new Date();
     if (currdate.getHours() > 0 && currdate.getHours() < 2) {
-      ram();
+      ram("CALL",0);
       $(".details").prepend(
         "<br>Triggered :" +
           new Date().toLocaleString(undefined, { timeZone: "Asia/Kolkata" })
@@ -22,7 +22,7 @@
 
 
       
-    function  ram(){
+    function  ram(flagVar,flagval){
       hoje = new Date();
 
       dia = hoje.getDate() + 1;
@@ -60,9 +60,9 @@
       var percentageMax = 100;
       var candleTime = "M5";
       var daysAnalyse = 10;
-      var volume=600;
+      var volume=750;
       var martingales = 0;
-      var orderType = "CALL";
+      var orderType = flagVar;
       var timeInit = 9;
       var timeEnd = 17;
       var cbAtivo=0;
@@ -246,13 +246,14 @@
             currentGroup.winrate <= percentageMax &&
             currentGroup.volume >= volume
           ) {
-            listBestPairTimes.push(currentGroup);
-            continue;
+            if(currentGroup.pair == "GBP_USD" && currentGroup.volume >= volume+200){
+              listBestPairTimes.push(currentGroup);
+              continue;
+            }
           }
         }
         
-        requestNumber--;
-        console.log(listBestPairTimes);
+        requestNumber--;        
         if (requestNumber == 0) {
          return DownloadTxt();
         }
@@ -271,13 +272,21 @@
         }
         
         listBestPairTimes.sort((a, b) => (a.time > b.time ? 1 : -1));       
-        // console.log(listBestPairTimes);
+        
+        if(flagval == 0){
+          listBestPairTimesbackup=listBestPairTimes;
+          ram("PUT",1);return false;
+        }else{
+          listBestPairTimesbackup =listBestPairTimesbackup.concat(listBestPairTimes);
+        }
+        listBestPairTimesbackup.sort((a, b) => (a.time > b.time ? 1 : -1));
+        listBestPairTimes=listBestPairTimesbackup;
+        
         
         var listNumber = listBestPairTimes.length / 80;
         var i = 0;
         var stringList2 = " ";
-        stringList2 +=
-        candleTime + "%0a" + day + headtingOwn + ":%0a%0a" + "PROFIT:%0a%0a";
+//         stringList2 +=candleTime + "%0a" + day + headtingOwn + ":%0a%0a" + "PROFIT:%0a%0a";
         
         if (candleTime == "M2") {
           candleTime = "M1";
@@ -298,7 +307,7 @@
               }
             }
             
-             if(candle.time <= "09:30:00" && candle.pair == "GBP_USD"){
+             if(candle.time <= "11:30:00" && candle.pair == "GBP_USD"){
               continue;
             }
             
