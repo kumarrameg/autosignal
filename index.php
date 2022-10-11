@@ -246,7 +246,10 @@
             currentGroup.winrate <= percentageMax &&
             currentGroup.volume >= volume
           ) {
-            if(currentGroup.pair == "GBP_USD" && currentGroup.volume >= volume+200){
+            if(currentGroup.pair == "GBP_USD" && currentGroup.volume >= volume+400){
+              listBestPairTimes.push(currentGroup);
+              continue;
+            }else{
               listBestPairTimes.push(currentGroup);
               continue;
             }
