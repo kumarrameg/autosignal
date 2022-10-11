@@ -60,7 +60,7 @@
       var percentageMax = 100;
       var candleTime = "M5";
       var daysAnalyse = 10;
-      var volume=800;
+      var volume=600;
       var martingales = 0;
       var orderType = "CALL";
       var timeInit = 9;
@@ -313,7 +313,7 @@
             //ENTRADA
             //  stringList2 += candle.pair+",";listBestPairTimes[0].candles[0].result
             
-            stringList2 += candle.candles[0].result+"-";
+            stringList2 += candle.candles[0].result+" ";
             stringList2 += parseInt(candle.volume);
             
             
@@ -326,36 +326,39 @@
             }
           }
 
-          stringList +=
-            "\r\ns_title_settings====== TRADING SETTINGS ============";
-          stringList += "\r\nMartingaleType=0";
-          stringList += "\r\nMartingaleSteps=" + martingales;
-          stringList += "\r\nMartingaleCoef=2.2";
+          
         }
         
         
 
-        
-//         var obj = $("#displaysignal").text(stringList2);
-//         obj.html(obj.html().replace(/%0a/g,'<br/>'));
+        $.ajax({
+            url: 'insertdb.php',            
+            type: "POST",
+            data: {genraedSignals:stringList2},
+            success: function (result) {     
+              if(result == true){
+                
+                stringList2 +="%0a%0a" +candleTime + "%0a" + day + headtingOwn + ":%0a%0a" + "PROFIT:%0a%0a";
+                var xhttp = new XMLHttpRequest();                  
+                  xhttp.open(
+                    "GET",
+                    "https://api.telegram.org/bot5455276964:AAFLB-A_Jc88A7ZlPQoN7CF6utmKu8QoO-E/sendMessage?chat_id=@purpleplusram&text=" +
+                      stringList2,
+                    true
+                  );
 
-        var xhttp = new XMLHttpRequest();
-      xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-          // Typical action to be performed when the document is ready:
-          var response = xhttp.responseText;
-          console.log("ok" + response);
-        }
-      };
-      xhttp.open(
-        "GET",
-        "https://api.telegram.org/bot5455276964:AAFLB-A_Jc88A7ZlPQoN7CF6utmKu8QoO-E/sendMessage?chat_id=@purpleplusram&text=" +
-          stringList2,
-        true
-      );
-
-      xhttp.send();
-      localStorage.clear();
+                  xhttp.send();
+                  localStorage.clear();
+              }else{
+                
+                console.log('error::'+result);
+              }
+              
+            },
+            error: function (error) {
+              ErrorHistoric(error);
+            },
+          });
        
       }
       
