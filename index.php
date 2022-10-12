@@ -60,7 +60,7 @@
       var percentageMax = 100;
       var candleTime = "M5";
       var daysAnalyse = 10;
-      var volume=750;
+      var volumeSignal=750;
       var martingales = 0;
       var orderType = flagVar;
       var timeInit = 9;
@@ -244,13 +244,16 @@
           if (
             currentGroup.winrate >= percentageMin &&
             currentGroup.winrate <= percentageMax &&
-            currentGroup.volume >= volume
+            currentGroup.volume >= volumeSignal
           ) {
-            if(currentGroup.pair == "GBP_USD" && currentGroup.volume >= volume+350){
+            if(currentGroup.pair != "GBP_USD"){
               listBestPairTimes.push(currentGroup);
               continue;
             }else{
-              listBestPairTimes.push(currentGroup);
+              if(currentGroup.volume >= volumeSignal+350){
+                listBestPairTimes.push(currentGroup);
+                continue;
+              }
               continue;
             }
           }
