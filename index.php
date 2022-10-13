@@ -60,7 +60,7 @@
       var percentageMax = 100;
       var candleTime = "M5";
       var daysAnalyse = 10;
-      var volumeSignal=750;
+      var volumeSignal=800;
       var martingales = 0;
       var orderType = flagVar;
       var timeInit = 9;
@@ -250,7 +250,7 @@
               listBestPairTimes.push(currentGroup);
               continue;
             }else{
-              if(currentGroup.volume >= volumeSignal+350){
+              if(currentGroup.volume >= volumeSignal+300){
                 listBestPairTimes.push(currentGroup);
                 continue;
               }
