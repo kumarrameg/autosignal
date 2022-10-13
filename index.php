@@ -9,7 +9,8 @@
   (function () {
     currdate = new Date();
     if (currdate.getHours() > 0 && currdate.getHours() < 2) {
-      ram("CALL",0);
+//       ram("CALL",0);
+      ram();
       $(".details").prepend(
         "<br>Triggered :" +
           new Date().toLocaleString(undefined, { timeZone: "Asia/Kolkata" })
@@ -22,7 +23,7 @@
 
 
       
-    function  ram(flagVar,flagval){
+    function  ram(){
       hoje = new Date();
 
       dia = hoje.getDate() + 1;
@@ -62,7 +63,7 @@
       var daysAnalyse = 10;
       var volumeSignal=800;
       var martingales = 0;
-      var orderType = flagVar;
+      var orderType = "CALL";
       var timeInit = 9;
       var timeEnd = 17;
       var cbAtivo=0;
@@ -279,14 +280,14 @@
         
         listBestPairTimes.sort((a, b) => (a.time > b.time ? 1 : -1));       
         
-        if(flagval == 0){
-          listBestPairTimesbackup=listBestPairTimes;
-          ram("PUT",1);return false;
-        }else{
-          listBestPairTimesbackup =listBestPairTimesbackup.concat(listBestPairTimes);
-        }
-        listBestPairTimesbackup.sort((a, b) => (a.time > b.time ? 1 : -1));
-        listBestPairTimes=listBestPairTimesbackup;
+//         if(flagval == 0){
+//           listBestPairTimesbackup=listBestPairTimes;
+//           ram("PUT",1);return false;
+//         }else{
+//           listBestPairTimesbackup =listBestPairTimesbackup.concat(listBestPairTimes);
+//         }
+//         listBestPairTimesbackup.sort((a, b) => (a.time > b.time ? 1 : -1));
+//         listBestPairTimes=listBestPairTimesbackup;
         
         
         var listNumber = listBestPairTimes.length / 80;
