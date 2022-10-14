@@ -18,8 +18,9 @@ if (isset($_POST["genraedSignals"])){
       array_push($twoDArray, array_filter(explode(' ', $singlePairResult)));
   }
 
-  
-  $currentDate = date("Y-m-d");
+
+ 
+  $currentDate =date('Y-m-d', strtotime($Date. ' + 1 days'));  
   $currentday = date('D', strtotime("$currentDate"));
   
 
