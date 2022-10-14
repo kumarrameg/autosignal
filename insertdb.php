@@ -9,6 +9,8 @@ if (isset($_POST["genraedSignals"])){
   $dbname = "sql6525494";
 
   $genratdsignal=$_POST["genraedSignals"];
+  $currentDate=$_POST["todayDate"];
+  $currentday=$_POST["day"];
   // $genratdsignal="%0aGBPUSD 12:10 CALL 960%0aEURUSD 12:30 CALL 1015%0aGBPUSD 12:30 CALL 1728%0aGBPUSD 12:35 CALL 1397%0aGBPUSD 12:40 CALL 1483%0aGBPUSD 12:45 CALL 1425%0aEURGBP 13:25 CALL 955%0aGBPUSD 14:05 CALL 992%0aGBPUSD 14:50 CALL 1088%0aGBPUSD 16:10 CALL 908%0aGBPUSD 16:15 CALL 1043%0aGBPUSD 16:30 CALL 994%0aGBPUSD 16:35 CALL 911%0aGBPUSD 16:45 CALL 973%0aGBPUSD 17:50 CALL 1024";
   $oneDArray = array_filter(explode('%0a',$genratdsignal));
   $twoDArray = [];
@@ -18,10 +20,6 @@ if (isset($_POST["genraedSignals"])){
       array_push($twoDArray, array_filter(explode(' ', $singlePairResult)));
   }
 
-
- 
-  $currentDate =date('Y-m-d', strtotime($Date. ' + 1 days'));  
-  $currentday = date('D', strtotime("$currentDate"));
   
 
   $conn = new mysqli($servername, $username, $password, $dbname);
