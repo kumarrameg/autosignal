@@ -346,11 +346,11 @@
         }
         
         
-
+        var todayDate = new Date().toISOString().slice(0, 10);
         $.ajax({
             url: 'insertdb.php',            
             type: "POST",
-            data: {genraedSignals:stringList2},
+            data: {genraedSignals:stringList2,day:day,todayDate:todayDate},
             success: function (result) {     
               if(result == true){
                 
