@@ -3,10 +3,10 @@ error_reporting(E_ERROR | E_PARSE);
 
 if (isset($_POST["genraedSignals"])){
  
-  $servername = "sql6.freemysqlhosting.net";
-  $username = "sql6525494";
-  $password = "dngmIj33fH";
-  $dbname = "sql6525494";
+  $servername = "database-1.cbeiyy7nwxcu.us-west-2.rds.amazonaws.com";
+  $username = "kumarrameg";
+  $password = "39B!3vrKPzA$";
+  $dbname = "parisdetail";
 
   $genratdsignal=$_POST["genraedSignals"];
   $currentDate=$_POST["todayDate"];
