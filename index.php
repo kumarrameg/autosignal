@@ -60,8 +60,8 @@
       var percentageMin = 100;
       var percentageMax = 100;
       var candleTime = "M5";
-      var daysAnalyse = 10;
-      var volumeSignal=800;
+      var daysAnalyse = 14;
+      var volumeSignal=550;
       var martingales = 0;
       var orderType = "CALL";
       var timeInit = 9;
