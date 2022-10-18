@@ -5,21 +5,21 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!-- <h1 id="displaysignal"></h1> -->
   <script> 
+       ram();
+//   (function () {
+//     currdate = new Date();
+//     if (currdate.getHours() > 4 && currdate.getHours() < 6 && currdate.getMinutes() > 0 && currdate.getMinutes() < 30 ) {
+// //       ram("CALL",0);
+//       ram();
+//       $(".details").prepend(
+//         "<br>Triggered :" +
+//           new Date().toLocaleString(undefined, { timeZone: "Asia/Kolkata" })
+//       );
+//     }
+//     console.log(currdate.getHours());
 
-  (function () {
-    currdate = new Date();
-    if (currdate.getHours() > 4 && currdate.getHours() < 6 && currdate.getMinutes() > 0 && currdate.getMinutes() < 30 ) {
-//       ram("CALL",0);
-      ram();
-      $(".details").prepend(
-        "<br>Triggered :" +
-          new Date().toLocaleString(undefined, { timeZone: "Asia/Kolkata" })
-      );
-    }
-    console.log(currdate.getHours());
-
-    setTimeout(arguments.callee, 1000 *60 * 30);
-  })();
+//     setTimeout(arguments.callee, 1000 *60 * 30);
+//   })();
 
 
       
