@@ -8,7 +8,7 @@
 
   (function () {
     currdate = new Date();
-    if (currdate.getHours() > 0 && currdate.getHours() < 2) {
+    if (currdate.getHours() > 4 && currdate.getHours() < 6 && currdate.getMinutes() > 0 && currdate.getMinutes() < 30 ) {
 //       ram("CALL",0);
       ram();
       $(".details").prepend(
@@ -235,7 +235,7 @@
               currentGroup.averageTickDif += item.percentDif;
             }
           }
-          currentGroup.volume=currentGroup.volume/3;
+          currentGroup.volume=currentGroup.volume/currentGroup.candles.length;
 
           currentGroup.averageTickDif =
             currentGroup.averageTickDif / currentGroup.winrate;            
