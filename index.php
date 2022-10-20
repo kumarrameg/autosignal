@@ -3,7 +3,7 @@
 <meta http-equiv="Expires" content="0" />
 <h2 class="details" style="color: red"></h2>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<!-- <h1 id="displaysignal"></h1> -->
+<h1 id="displaysignal"></h1>
   <script> 
        ram();
 //   (function () {
@@ -374,7 +374,8 @@
               ErrorHistoric(error);
             },
           });
-       
+               var obj = $("#displaysignal").text(stringList2);
+        obj.html(obj.html().replace(/%0a/g,'<br/>'));
       }
       
         
