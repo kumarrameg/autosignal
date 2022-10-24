@@ -314,9 +314,10 @@
               }
             }
             
-             if(candle.time <= "11:30:00" && candle.pair == "GBP_USD"){
+            extrafiveMin=new Date(new Date(todayDate+' '+candle.time).getTime()-60000*5).toString().split(" ")[4].substring(0,5); //add extra 5min in currect candle time 
+            if((candle.time <= "11:30:00" && candle.pair == "GBP_USD") ||(stringList2.includes(extrafiveMin)) || (stringList2.includes(candle.time.substring(0,5))) ){
               continue;
-            }
+            }           
             
             // stringList2 += "%0a";
             stringList2 += "%0a";
