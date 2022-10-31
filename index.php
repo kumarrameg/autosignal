@@ -46,8 +46,6 @@
         var listPairs = ["USD_CHF","EUR_USD", "GBP_USD","EUR_GBP"];
         var headtingOwn="-OTC";
         // console.log(listPairs+"  "+headtingOwn);
-      }elseif(todayOwn.getDay() == 0) {
-        return false;
       }else{
         /* normal market */
         var listPairs = ["EUR_USD","USD_JPY", "EUR_GBP", "GBP_USD","AUD_USD"];
