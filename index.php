@@ -5,7 +5,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <h1 id="displaysignal"></h1>
   <script> 
-//        ram();
+       ram();
 //   (function () {
 //     currdate = new Date();
 //     if (currdate.getHours() > 4 && currdate.getHours() < 6 && currdate.getMinutes() > 0 && currdate.getMinutes() < 30 ) {
@@ -21,11 +21,11 @@
 //     setTimeout(arguments.callee, 1000 *60 * 30);
 //   })();
 
-    ram("CALL",0);    
-    var listBestPairTimesbackup = [];
-    function ram(flagVar,flagval){
+//     ram("CALL",0);    
+//     var listBestPairTimesbackup = [];
+//     function ram(flagVar,flagval){
       
-//     function  ram(){
+    function  ram(){
       var todayDate = new Date().toISOString().slice(0, 10);
       hoje = new Date();
 
@@ -66,8 +66,8 @@
       var daysAnalyse = 14;
       var volumeSignal=550;
       var martingales = 0;
-//       var orderType = "CALL";
-      var orderType = flagVar;
+      var orderType = "CALL";
+//       var orderType = flagVar;
       var timeInit = 9;
       var timeEnd = 17;
       var cbAtivo=0;
@@ -284,14 +284,14 @@
         
         listBestPairTimes.sort((a, b) => (a.time > b.time ? 1 : -1));       
         
-        if(flagval == 0){
-          listBestPairTimesbackup=listBestPairTimes;
-          ram("PUT",1);return false;
-        }else{
-          listBestPairTimesbackup =listBestPairTimesbackup.concat(listBestPairTimes);
-        }
-        listBestPairTimesbackup.sort((a, b) => (a.time > b.time ? 1 : -1));
-        listBestPairTimes=listBestPairTimesbackup;
+//         if(flagval == 0){
+//           listBestPairTimesbackup=listBestPairTimes;
+//           ram("PUT",1);return false;
+//         }else{
+//           listBestPairTimesbackup =listBestPairTimesbackup.concat(listBestPairTimes);
+//         }
+//         listBestPairTimesbackup.sort((a, b) => (a.time > b.time ? 1 : -1));
+//         listBestPairTimes=listBestPairTimesbackup;
         
         
         var listNumber = listBestPairTimes.length / 80;
