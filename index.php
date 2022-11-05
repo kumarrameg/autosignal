@@ -1,434 +1,629 @@
-<meta http-equiv="Cache-Control" content="no-cache" />
-<meta http-equiv="Pragma" content="no-cache" />
-<meta http-equiv="Expires" content="0" />
-<h2 class="details" style="color: red"></h2>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<h1 id="displaysignal"></h1>
-  <script> 
-       ram();
-//   (function () {
-//     currdate = new Date();
-//     if (currdate.getHours() > 4 && currdate.getHours() < 6 && currdate.getMinutes() > 0 && currdate.getMinutes() < 30 ) {
-// //       ram("CALL",0);
-//       ram();
-//       $(".details").prepend(
-//         "<br>Triggered :" +
-//           new Date().toLocaleString(undefined, { timeZone: "Asia/Kolkata" })
-//       );
-//     }
-//     console.log(currdate.getHours());
-
-//     setTimeout(arguments.callee, 1000 *60 * 30);
-//   })();
-
-//     ram("CALL",0);    
-//     var listBestPairTimesbackup = [];
-//     function ram(flagVar,flagval){
-      
-    function  ram(){
-      var todayDate = new Date().toISOString().slice(0, 10);
-      hoje = new Date();
-
-      dia = hoje.getDate() + 1;
-
-      dias = hoje.getDay() + 1;
-
-      mes = hoje.getMonth() + 1;
-
-      ano = hoje.getYear();
-
-      var listBestPairTimes = [];
-       
-      
-
-      var todayOwn = new Date();
-      if(todayOwn.getDay() == 6) {
-        /* OTC */
+<?php 
         
-        var listPairs = ["USD_CHF","EUR_USD", "GBP_USD","EUR_GBP"];
-        var headtingOwn="-OTC";
-        // console.log(listPairs+"  "+headtingOwn);
-      }else{
-        /* normal market */
-        var listPairs = ["EUR_USD","USD_JPY", "EUR_GBP", "GBP_USD","AUD_USD"];
+    // $servername = "sql6.freesqldatabase.com";
+    // $username = "sql6513929";
+    // $password = "A9ACvaXjXS";
+    // $dbname = "sql6513929";
+    include('dbconnect.php');
+    error_reporting(E_ERROR | E_PARSE);
+        
+        
+        $conn =mysqli_connect($servername,$username,$password,$dbname);        
+        
+        
+        
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail"));
+        $toalSignals=$values['total'];
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' "));
+        $winsignal=$values['total'];
+         $winsignalpercentage=round($winsignal/$toalSignals *100);
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' "));
+        $losssignal=$values['total'];
+          $losssignalpercentage=round( $losssignal/$toalSignals *100);
+         
+        $weekwin=$values['total'];
+         
+        $weekloss=$values['total'];
+         
+        $otcwin=$values['total'];
+         
+        $otcloss=$values['total'];
 
-        // var listPairs = ["EUR_USD"];
-        var headtingOwn="";
 
-        // console.log(listPairs+"  "+headtingOwn);
-      }
-      const days = ["Sun","Mon","Tues","Wed","Thur","Fri","Sat"];
+        // tabkee 1 conten
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='EURUSD' "));
+        $eurusdwin=$values['total'];
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='EURUSD' "));
+        $eurusdloss=$values['total'];
 
-      let day = days[todayOwn.getDay()];
-      var percentageMin = 100;
-      var percentageMax = 100;
-      var candleTime = "M5";
-      var daysAnalyse = 14;
-      var volumeSignal=550;
-      var martingales = 0;
-      var orderType = "CALL";
-//       var orderType = flagVar;
-      var timeInit = 9;
-      var timeEnd = 17;
-      var cbAtivo=0;
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='GBPUSD' "));
+        $gbpusdwin=$values['total'];
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='GBPUSD' "));
+        $gbpusdloss=$values['total'];
+        
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='USDJPY' "));
+        $usdjpywin=$values['total'];
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='USDJPY' "));
+        $usdjpyloss=$values['total'];
 
-      
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='AUDUSD' "));
+        $audusdwin=$values['total'];
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='AUDUSD' "));
+        $audusdloss=$values['total'];
 
-      var requestNumber = 0;
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='EURGBP' "));
+        $eurgbpwin=$values['total'];
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='EURGBP' "));
+        $eurgbploss=$values['total'];
+
+
+        // monday
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='EURUSD' and currentday='Mon' "));
+        $moneurusdwin=$values['total'];
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='EURUSD' and currentday='Mon' "));
+        $moneurusdloss=$values['total'];
+
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='GBPUSD' and currentday='Mon' "));
+        $mongbpusdwin=$values['total'];
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='GBPUSD' and currentday='Mon' "));
+        $mongbpusdloss=$values['total'];
+        
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='USDJPY' and currentday='Mon' "));
+        $monusdjpywin=$values['total'];
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='USDJPY' and currentday='Mon' "));
+        $monusdjpyloss=$values['total'];
+
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='AUDUSD' and currentday='Mon' "));
+        $monaudusdwin=$values['total'];
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='AUDUSD' and currentday='Mon' "));
+        $monaudusdloss=$values['total'];
+
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='EURGBP' and currentday='Mon' "));
+        $moneurgbpwin=$values['total'];
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='EURGBP' and currentday='Mon' "));
+        $moneurgbploss=$values['total'];
+        // monday end
+
+
+            // Tue
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='EURUSD' and currentday='Tue' "));
+            $tueeurusdwin=$values['total'];
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='EURUSD' and currentday='Tue' "));
+            $tueeurusdloss=$values['total'];
     
-      getHistoric();
-      //Primeira ação ao cliclar no botão PROCESSAR DADOS
-      function getHistoric() {
-        
-        // $("body").css("cursor", "progress");
-        listBestPairTimes = [];
-        // getParameter();
-        
-        if (cbAtivo == 0) {
-          requestNumber = listPairs.length;
-        } else {
-          listPairs = [cbAtivo];
-          requestNumber = listPairs.length;
-        }        
-        var count = CalculateCountCandles();      
-        
-        
-        
-        if (count > 50000) {
-          return;
-        }
-
-        for (var i = 0; i < listPairs.length; i++) {
-          var currentPair = listPairs[i];
-          callHistoricData(currentPair, count, cbAtivo);
-        }
-      }
-
-      
-
-      function CalculateCountCandles() {
-        
-        var minutes = 15; // DEFAULT FOR M15
-        switch (candleTime) {
-          case "M2":
-            minutes = 2;
-            break;
-          case "M2":
-            minutes = 2;
-            break;
-          case "M10":
-            minutes = 10;
-            break;
-          case "M10":
-            minutes = 10;
-            break;
-          case "M10":
-            minutes = 10;
-            break;
-          case "M15":
-            minutes = 15;
-            break;
-          case "M30":
-            minutes = 30;
-            break;
-          case "H1":
-            minutes = 60;
-            break;
-          case "H2":
-            minutes = 120;
-            break;
-          case "H4":
-            minutes = 240;
-            break;
-        }
-
-        var count = 60 / minutes;
-        count = 24 * count;
-        count = count * daysAnalyse;
-        return count;
-      }
-
-      function callHistoricData(pair, count, cbAtivo) {
-        
-        if (cbAtivo == 0) {
-          var urlHist =
-            "https://api-fxpractice.oanda.com/v3/instruments/" +
-            pair +
-            "/candles?granularity=" +
-            candleTime +
-            "&count=" +
-            count;
-          $.ajax({
-            url: urlHist,
-            /* headers: {
-              Authorization:
-                "Bearer eb2326208921b413a87728832f191f03-d9be68b74884f7d3107b9f05ca305319",
-            }, */
-            headers: {
-              Authorization:
-                "Bearer 9786b2c10d1d20bfb034e37b87dae62e-9a1ff57d6a09466907da1e65a6c7353d",
-            },
-            type: "GET",
-            success: function (result) {     
-
-              CalculateHistoric(result);
-            },
-            error: function (error) {
-              ErrorHistoric(error);
-            },
-          });
-        } 
-      }
-      function CalculateHistoric(result) {
-        var candles = result.candles;
-        var candlesResult = [];
-        for (var i = 0; i < candles.length; i++) {
-          var candle = candles[i];
-
-          
-          var item = new Object();
-          item.resultValue = candle.mid.o - candle.mid.c;
-          item.date = ConvertDate(candle.time);
-          item.result = GetStringResult(item.resultValue);
-          item.percentDif = (item.resultValue * 100) / candle.mid.o;
-          item.volume=candle.volume;
-          
-          if (item.result === orderType ) {
-            item.win = true;
-          } else {
-            item.win = false;
-          }
-
-          //if(CheckTime(item.date)){
-
-          var arrayTime = item.date.time.split(":");
-
-          if (
-            parseInt(arrayTime[0]) < parseInt(timeInit) ||
-            parseInt(arrayTime[0]) > parseInt(timeEnd)
-          ) {
-            continue;
-          }
-          candlesResult.push(item);
-          
-        }
-        
-        // console.log(candlesResult);
-        var timeGroupedCandles = Array.from(
-          new Set(candlesResult.map((s) => s.date.time))
-          ).map((time) => {
-            return {
-              time: time,
-              candles: candlesResult.filter((s) => s.date.time === time),
-              pair: result.instrument,
-              // volume: candlesResult.volume,
-            };
-          });
-
-          
-        for (var i = 0; i < timeGroupedCandles.length; i++) {
-          var currentGroup = timeGroupedCandles[i];
-          currentGroup.winrate = 0;          
-          currentGroup.volume = 0;          
-          currentGroup.averageTickDif = 0;
-          for (var z = 0; z < currentGroup.candles.length; z++) {
-            var candle = currentGroup.candles[z];
-            if (candle.win == true) {
-              currentGroup.volume+= candle.volume;
-              currentGroup.winrate++;
-              currentGroup.averageTickDif += item.percentDif;
-            }
-          }
-          currentGroup.volume=currentGroup.volume/currentGroup.candles.length;
-
-          currentGroup.averageTickDif =
-            currentGroup.averageTickDif / currentGroup.winrate;            
-          currentGroup.winrate =
-            (currentGroup.winrate * 100) / currentGroup.candles.length;
-
-          if (
-            currentGroup.winrate >= percentageMin &&
-            currentGroup.winrate <= percentageMax &&
-            currentGroup.volume >= volumeSignal
-          ) {
-            if(currentGroup.pair != "GBP_USD"){
-              listBestPairTimes.push(currentGroup);
-              continue;
-            }else{
-              if(currentGroup.volume >= volumeSignal+300){
-                listBestPairTimes.push(currentGroup);
-                continue;
-              }
-              continue;
-            }
-          }
-        }
-        
-        requestNumber--;        
-        if (requestNumber == 0) {
-         return DownloadTxt();
-        }
-      }
-
-      function CheckTime(date) {
-        var minDate = new Date();
-        return true;
-      }
-
-  
-
-      function DownloadTxt(title, message) {
-        
-        if (listBestPairTimes.length <= 0) {
-        }
-        
-        listBestPairTimes.sort((a, b) => (a.time > b.time ? 1 : -1));       
-        
-//         if(flagval == 0){
-//           listBestPairTimesbackup=listBestPairTimes;
-//           ram("PUT",1);return false;
-//         }else{
-//           listBestPairTimesbackup =listBestPairTimesbackup.concat(listBestPairTimes);
-//         }
-//         listBestPairTimesbackup.sort((a, b) => (a.time > b.time ? 1 : -1));
-//         listBestPairTimes=listBestPairTimesbackup;
-        
-        
-        var listNumber = listBestPairTimes.length / 80;
-        var i = 0;
-        var stringList2 = " ";
-//         stringList2 +=candleTime + "%0a" + day + headtingOwn + ":%0a%0a" + "PROFIT:%0a%0a";
-        
-        if (candleTime == "M2") {
-          candleTime = "M1";
-        }
-
-        
-        for (var x = 00; x < listNumber; x++) {
-          var index = 1;
-          var stringList = "HORA  MOEDAS DIREÇÃO \r\n Teste  " + candleTime;
-          
-          for (; i < listBestPairTimes.length; i++) {
-            var candle = listBestPairTimes[i];
-            var arrayTime = candle.time.split(":");
-
-            for (var z = 0; z < arrayTime.length; z++) {
-              if (arrayTime[z] === "00") {
-                arrayTime[z] = "000";
-              }
-            }
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='GBPUSD' and currentday='Tue' "));
+            $tuegbpusdwin=$values['total'];
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='GBPUSD' and currentday='Tue' "));
+            $tuegbpusdloss=$values['total'];
             
-            extrafiveMin=new Date(new Date(todayDate+' '+candle.time).getTime()-60000*5).toString().split(" ")[4].substring(0,5); //add extra 5min in currect candle time 
-            extratenMin=new Date(new Date(todayDate+' '+candle.time).getTime()-60000*10).toString().split(" ")[4].substring(0,5); //add extra 5min in currect candle time 
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='USDJPY' and currentday='Tue' "));
+            $tueusdjpywin=$values['total'];
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='USDJPY' and currentday='Tue' "));
+            $tueusdjpyloss=$values['total'];
+    
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='AUDUSD' and currentday='Tue' "));
+            $tueaudusdwin=$values['total'];
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='AUDUSD' and currentday='Tue' "));
+            $tueaudusdloss=$values['total'];
+    
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='EURGBP' and currentday='Tue' "));
+            $tueeurgbpwin=$values['total'];
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='EURGBP' and currentday='Tue' "));
+            $tueeurgbploss=$values['total'];
+            // Tue end
+
+            // wed
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='EURUSD' and currentday='Wed' "));
+            $wedeurusdwin=$values['total'];
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='EURUSD' and currentday='Wed' "));
+            $wedeurusdloss=$values['total'];
+    
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='GBPUSD' and currentday='Wed' "));
+            $wedgbpusdwin=$values['total'];
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='GBPUSD' and currentday='Wed' "));
+            $wedgbpusdloss=$values['total'];
+            
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='USDJPY' and currentday='Wed' "));
+            $wedusdjpywin=$values['total'];
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='USDJPY' and currentday='Wed' "));
+            $wedusdjpyloss=$values['total'];
+    
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='AUDUSD' and currentday='Wed' "));
+            $wedaudusdwin=$values['total'];
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='AUDUSD' and currentday='Wed' "));
+            $wedaudusdloss=$values['total'];
+    
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='EURGBP' and currentday='Wed' "));
+            $wedeurgbpwin=$values['total'];
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='EURGBP' and currentday='Wed' "));
+            $wedeurgbploss=$values['total'];
+            // wed end
+
+            // thu
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='EURUSD' and currentday='Thu' "));
+            $thueurusdwin=$values['total'];
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='EURUSD' and currentday='Thu' "));
+            $thueurusdloss=$values['total'];
+    
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='GBPUSD' and currentday='Thu' "));
+            $thugbpusdwin=$values['total'];
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='GBPUSD' and currentday='Thu' "));
+            $thugbpusdloss=$values['total'];
+            
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='USDJPY' and currentday='Thu' "));
+            $thuusdjpywin=$values['total'];
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='USDJPY' and currentday='Thu' "));
+            $thuusdjpyloss=$values['total'];
+    
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='AUDUSD' and currentday='Thu' "));
+            $thuaudusdwin=$values['total'];
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='AUDUSD' and currentday='Thu' "));
+            $thuaudusdloss=$values['total'];
+    
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='EURGBP' and currentday='Thu' "));
+            $thueurgbpwin=$values['total'];
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='EURGBP' and currentday='Thu' "));
+            $thueurgbploss=$values['total'];
+            // thu end
+
+            // fri
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='EURUSD' and currentday='Fri' "));
+            $frieurusdwin=$values['total'];
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='EURUSD' and currentday='Fri' "));
+            $frieurusdloss=$values['total'];
+    
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='GBPUSD' and currentday='Fri' "));
+            $frigbpusdwin=$values['total'];
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='GBPUSD' and currentday='Fri' "));
+            $frigbpusdloss=$values['total'];
+            
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='USDJPY' and currentday='Fri' "));
+            $friusdjpywin=$values['total'];
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='USDJPY' and currentday='Fri' "));
+            $friusdjpyloss=$values['total'];
+    
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='AUDUSD' and currentday='Fri' "));
+            $friaudusdwin=$values['total'];
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='AUDUSD' and currentday='Fri' "));
+            $friaudusdloss=$values['total'];
+    
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='EURGBP' and currentday='Fri' "));
+            $frieurgbpwin=$values['total'];
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='EURGBP' and currentday='Fri' "));
+            $frieurgbploss=$values['total'];
+            // fri end
 
 
-            if((candle.time <= "11:30:00" && candle.pair == "GBP_USD") ||(stringList2.includes(extrafiveMin)) ||(stringList2.includes(extratenMin)) || (stringList2.includes(candle.time.substring(0,5))) ){
-              continue;
-            }           
-            
-            // stringList2 += "%0a";
-            stringList2 += "%0a";
-            //EXPIRACAO
-            stringList2 += candle.pair.replace("_", "") + headtingOwn + " ";
-            
-            // stringList2 += candleTime + ";";
-            //HORARIO
-            stringList2 += candle.time.substring(0,5) +" ";
-            //ENTRADA
-            //  stringList2 += candle.pair+",";listBestPairTimes[0].candles[0].result
-            
-            stringList2 += candle.candles[0].result+" ";
-            stringList2 += parseInt(candle.volume);
-            
-            
-            
-            index++;
-
-            if (i > 0 && (i + 1) % 80 == 0) {
-              i++;
-              break;
-            }
-          }
-
-          
-        }
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='EURUSD-OTC' "));
+        $eurusdotcwin=$values['total'];
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='EURUSD-OTC' "));
+        $eurusdotcloss=$values['total'];
         
-        
-        
-        $.ajax({
-            url: 'insertdb.php',            
-            type: "POST",
-            data: {genraedSignals:stringList2,day:day,todayDate:todayDate},
-            success: function (result) {     
-              if(result == true){
-                
-                var xhttp = new XMLHttpRequest();                    
-                  xhttp.open(
-                    "GET",
-                    "https://api.telegram.org/bot5455276964:AAFLB-A_Jc88A7ZlPQoN7CF6utmKu8QoO-E/sendMessage?chat_id=@purpleplusram&text=" +
-                      stringList2,
-                    true
-                  );
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='GBPUSD-OTC' "));
+        $gbpusdotcwin=$values['total'];
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='GBPUSD-OTC' "));
+        $gbpusdotcloss=$values['total'];
 
-                  xhttp.send();
-                  localStorage.clear();
-              }else{
-                
-                console.log('error::'+result);
-              }
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='USDCHF-OTC' "));
+        $usdchfotcwin=$values['total'];
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='USDCHF-OTC' "));
+        $usdchfotcloss=$values['total'];
+
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='NZDUSD-OTC' "));
+        $nzdusdotcwin=$values['total'];
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='NZDUSD-OTC' "));
+        $nzdusdotcloss=$values['total'];
+
+
+        // sat
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='EURUSD-OTC' and currentday='Sat'  "));
+        $sateurusdotcwin=$values['total'];
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='EURUSD-OTC' and currentday='Sat'  "));
+        $sateurusdotcloss=$values['total'];
+        
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='GBPUSD-OTC' and currentday='Sat'  "));
+        $satgbpusdotcwin=$values['total'];
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='GBPUSD-OTC' and currentday='Sat'  "));
+        $satgbpusdotcloss=$values['total'];
+
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='USDCHF-OTC' and currentday='Sat'  "));
+        $satusdchfotcwin=$values['total'];
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='USDCHF-OTC' and currentday='Sat'  "));
+        $satusdchfotcloss=$values['total'];
+
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='NZDUSD-OTC' and currentday='Sat'  "));
+        $satnzdusdotcwin=$values['total'];
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='NZDUSD-OTC' and currentday='Sat'  "));
+        $satnzdusdotcloss=$values['total'];
+        // sat end
+
+
+         
+         
+         
+         
+         
+        
+         
+         
+         
+         
+
+         
+         
+         
+         
+
+         
+         
+         
+         
+         
               
-            },
-            error: function (error) {
-              ErrorHistoric(error);
-            },
-          });
-               var obj = $("#displaysignal").text(stringList2);
-        obj.html(obj.html().replace(/%0a/g,'<br/>'));
-      }
-      
         
-      
-
-      function GetStringResult(value) {
-        if (value > 0) {
-          return "PUT";
-        } else if (value < 0) {
-          return "CALL";
-        } else {
-          return "DRAW";
-        }
+?>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Dashboard</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+      .table {
+        color: white;
+        background: linear-gradient(-68deg, #ac32e4, #4801ff);
       }
 
-      function ErrorHistoric(error) {}
-
-      function ConvertDate(time) {
-      
-        var dateObj = new Date(time);
-        var temp = new Object();
-        var hora = dateObj.getHours();
-        var min = dateObj.getMinutes();
-        var sinalmes = mes;
-
-        if (hora < 10) {
-          hora = "0" + hora;
-        }
-        if (min < 10) {
-          min = "0" + min;
-        }
-        if (sinalmes < 10) {
-          sinalmes = "0" + sinalmes;
-        }
-
-      
-        temp.time = "" + hora + ":" + min + ":00";
-
-        return temp;
+      .parent-font {
+        font-size: 25px;
+        font-weight: bold;
       }
 
-    }
-      
-    
+      .child-font {
+        font-size: 15px;
+        font-weight: bold;
+      }
 
-   
-    </script>
+      .percentageclass {
+        font-size: 10px;
+      }
+
+      td:first-child {
+        font-weight: bold;
+      }
+      .margin-right-class{
+        margin-left: 25%;
+      }
+    </style>
+  </head>
+  <body>
+    <br>
+    <div class="container-fluid">
+      <div class="row">
+       
+          <span class="child-font "> Total Signals:</span>
+          <span class="parent-font"><?php echo $toalSignals; ?></span>
+       
+      </div>
+      <div class="row">
+       
+          <span class="child-font "> Win:</span>
+          <span class="parent-font"><?php echo $winsignal; ?> <span class="child-font ">/<?php echo $winsignalpercentage; ?>%</span> </span>
+       
+       
+          <span class="child-font margin-right-class"> Loss:</span>
+          <span class="parent-font"><?php echo $losssignal; ?><span class="child-font ">/<?php echo $losssignalpercentage; ?>%</span></span>
+       
+      </div>
+
+      <div class="row">
+       
+          <span class="child-font ">week Win:</span>
+          <span class="parent-font"><?php echo $weekwin; ?><?php echo '-'.round($weekwin/ ($weekwin+$weekloss)*100).'%';?></span>
+       
+       
+          <span class="child-font margin-right-class">week Loss:</span>
+          <span class="parent-font"><?php echo $weekloss; ?><?php echo '-'.round($weekloss/ ($weekwin+$weekloss)*100).'%';?></span>
+       
+      </div>
+      <div class="row">
+       
+          <span class="child-font ">OTC Win:</span>
+          <span class="parent-font"><?php echo $otcwin; ?><?php echo '-'.round($otcwin/ ($otcwin+$otcloss)*100).'%';?></span>
+       
+       
+          <span class="child-font margin-right-class">OTC Loss:</span>
+          <span class="parent-font"><?php echo $otcloss; ?><?php echo '-'.round($otcloss/ ($otcwin+$otcloss)*100).'%';?></span>
+       
+      </div>
+    </div>
+
+
+
+
+    <div class="container">
+      <br>
+      <br>
+      <table class="table ">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Total</th>
+            <th>Mon</th>
+            <th>Tues</th>
+            <th>Wed</th>
+            <th>Thur</th>
+            <th>Fri</th>
+             
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>EUR USD</td>
+            <td>
+              <span class='parent-font'><?php echo $eurusdwin .'-'.$eurusdloss; ?></span>
+              <span class="child-font"> <?php echo round($eurusdwin/ ($eurusdwin+$eurusdloss)*100).'-'.round($eurusdloss/ ($eurusdwin+$eurusdloss)*100); ?></span>
+              <span class="percentageclass">%</span>
+            </td>
+            <td>
+              <span class='parent-font'><?php echo $moneurusdwin .'-'.$moneurusdloss; ?></span>
+              <span class="child-font"> <?php echo round($moneurusdwin/ ($moneurusdwin+$moneurusdloss)*100).'-'.round($moneurusdloss/ ($moneurusdwin+$moneurusdloss)*100); ?></span>
+              <span class="percentageclass">%</span>
+            </td>
+            <td>
+              <span class='parent-font'><?php echo $tueeurusdwin .'-'.$tueeurusdloss; ?></span>
+              <span class="child-font"> <?php echo round($tueeurusdwin/ ($tueeurusdwin+$tueeurusdloss)*100).'-'.round($tueeurusdloss/ ($tueeurusdwin+$tueeurusdloss)*100); ?></span>
+              <span class="percentageclass">%</span>
+            </td>
+            <td>
+              <span class='parent-font'><?php echo $wedeurusdwin .'-'.$wedeurusdloss; ?></span>
+              <span class="child-font"> <?php echo round($wedeurusdwin/ ($wedeurusdwin+$wedeurusdloss)*100).'-'.round($wedeurusdloss/ ($wedeurusdwin+$wedeurusdloss)*100); ?></span>
+              <span class="percentageclass">%</span>
+            </td>
+            
+            <td>
+              <span class='parent-font'><?php echo $thueurusdwin .'-'.$thueurusdloss; ?></span>
+              <span class="child-font"> <?php echo round($thueurusdwin/ ($thueurusdwin+$thueurusdloss)*100).'-'.round($thueurusdloss/ ($thueurusdwin+$thueurusdloss)*100); ?></span>
+              <span class="percentageclass">%</span>
+            </td>
+            <td>
+              <span class='parent-font'><?php echo $frieurusdwin .'-'.$frieurusdloss; ?></span>
+              <span class="child-font"> <?php echo round($frieurusdwin/ ($frieurusdwin+$frieurusdloss)*100).'-'.round($frieurusdloss/ ($frieurusdwin+$frieurusdloss)*100); ?></span>
+              <span class="percentageclass">%</span>
+            </td>
+          </tr>
+          <tr>
+            <td>GBP USD</td>
+            <td>
+              <span class='parent-font'><?php echo $gbpusdwin .'-'.$gbpusdloss; ?></span>
+              <span class="child-font"> <?php echo round($gbpusdwin/ ($gbpusdwin+$gbpusdloss)*100).'-'.round($gbpusdloss/ ($gbpusdwin+$gbpusdloss)*100); ?></span>
+              <span class="percentageclass">%</span>
+            </td>
+            <td>
+              <span class='parent-font'><?php echo $mongbpusdwin .'-'.$mongbpusdloss; ?></span>
+              <span class="child-font"> <?php echo round($mongbpusdwin/ ($mongbpusdwin+$mongbpusdloss)*100).'-'.round($mongbpusdloss/ ($mongbpusdwin+$mongbpusdloss)*100); ?></span>
+              <span class="percentageclass">%</span>
+            </td>
+            <td>
+              <span class='parent-font'><?php echo $tuegbpusdwin .'-'.$tuegbpusdloss; ?></span>
+              <span class="child-font"> <?php echo round($tuegbpusdwin/ ($tuegbpusdwin+$tuegbpusdloss)*100).'-'.round($tuegbpusdloss/ ($tuegbpusdwin+$tuegbpusdloss)*100); ?></span>
+              <span class="percentageclass">%</span>
+            </td>
+            <td>
+              <span class='parent-font'><?php echo $wedgbpusdwin .'-'.$wedgbpusdloss; ?></span>
+              <span class="child-font"> <?php echo round($wedgbpusdwin/ ($wedgbpusdwin+$wedgbpusdloss)*100).'-'.round($wedgbpusdloss/ ($wedgbpusdwin+$wedgbpusdloss)*100); ?></span>
+              <span class="percentageclass">%</span>
+            </td>
+            
+            <td>
+              <span class='parent-font'><?php echo $thugbpusdwin .'-'.$thugbpusdloss; ?></span>
+              <span class="child-font"> <?php echo round($thugbpusdwin/ ($thugbpusdwin+$thugbpusdloss)*100).'-'.round($thugbpusdloss/ ($thugbpusdwin+$thugbpusdloss)*100); ?></span>
+              <span class="percentageclass">%</span>
+            </td>
+            <td>
+              <span class='parent-font'><?php echo $frigbpusdwin .'-'.$frigbpusdloss; ?></span>
+              <span class="child-font"> <?php echo round($frigbpusdwin/ ($frigbpusdwin+$frigbpusdloss)*100).'-'.round($frigbpusdloss/ ($frigbpusdwin+$frigbpusdloss)*100); ?></span>
+              <span class="percentageclass">%</span>
+            </td>
+          </tr>
+          <tr>
+            <td>USD JPY</td>
+            <td>
+              <span class='parent-font'><?php echo $usdjpywin .'-'.$usdjpyloss; ?></span>
+              <span class="child-font"> <?php echo round($usdjpywin/ ($usdjpywin+$usdjpyloss)*100).'-'.round($usdjpyloss/ ($usdjpywin+$usdjpyloss)*100); ?></span>
+              <span class="percentageclass">%</span>
+            </td>
+            <td>
+              <span class='parent-font'><?php echo $monusdjpywin .'-'.$monusdjpyloss; ?></span>
+              <span class="child-font"> <?php echo round($monusdjpywin/ ($monusdjpywin+$monusdjpyloss)*100).'-'.round($monusdjpyloss/ ($monusdjpywin+$monusdjpyloss)*100); ?></span>
+              <span class="percentageclass">%</span>
+            </td>
+            <td>
+              <span class='parent-font'><?php echo $tueusdjpywin .'-'.$tueusdjpyloss; ?></span>
+              <span class="child-font"> <?php echo round($tueusdjpywin/ ($tueusdjpywin+$tueusdjpyloss)*100).'-'.round($tueusdjpyloss/ ($tueusdjpywin+$tueusdjpyloss)*100); ?></span>
+              <span class="percentageclass">%</span>
+            </td>
+            <td>
+              <span class='parent-font'><?php echo $wedusdjpywin .'-'.$wedusdjpyloss; ?></span>
+              <span class="child-font"> <?php echo round($wedusdjpywin/ ($wedusdjpywin+$wedusdjpyloss)*100).'-'.round($wedusdjpyloss/ ($wedusdjpywin+$wedusdjpyloss)*100); ?></span>
+              <span class="percentageclass">%</span>
+            </td>
+            
+            <td>
+              <span class='parent-font'><?php echo $thuusdjpywin .'-'.$thuusdjpyloss; ?></span>
+              <span class="child-font"> <?php echo round($thuusdjpywin/ ($thuusdjpywin+$thuusdjpyloss)*100).'-'.round($thuusdjpyloss/ ($thuusdjpywin+$thuusdjpyloss)*100); ?></span>
+              <span class="percentageclass">%</span>
+            </td>
+            <td>
+              <span class='parent-font'><?php echo $friusdjpywin .'-'.$friusdjpyloss; ?></span>
+              <span class="child-font"> <?php echo round($friusdjpywin/ ($friusdjpywin+$friusdjpyloss)*100).'-'.round($friusdjpyloss/ ($friusdjpywin+$friusdjpyloss)*100); ?></span>
+              <span class="percentageclass">%</span>
+            </td>
+          </tr>
+          <tr>
+            <td>AUD USD</td>
+            <td>
+              <span class='parent-font'><?php echo $audusdwin .'-'.$audusdloss; ?></span>
+              <span class="child-font"> <?php echo round($audusdwin/ ($audusdwin+$audusdloss)*100).'-'.round($audusdloss/ ($audusdwin+$audusdloss)*100); ?></span>
+              <span class="percentageclass">%</span>
+            </td>
+            <td>
+              <span class='parent-font'><?php echo $monaudusdwin .'-'.$monaudusdloss; ?></span>
+              <span class="child-font"> <?php echo round($monaudusdwin/ ($monaudusdwin+$monaudusdloss)*100).'-'.round($monaudusdloss/ ($monaudusdwin+$monaudusdloss)*100); ?></span>
+              <span class="percentageclass">%</span>
+            </td>
+            <td>
+              <span class='parent-font'><?php echo $tueaudusdwin .'-'.$tueaudusdloss; ?></span>
+              <span class="child-font"> <?php echo round($tueaudusdwin/ ($tueaudusdwin+$tueaudusdloss)*100).'-'.round($tueaudusdloss/ ($tueaudusdwin+$tueaudusdloss)*100); ?></span>
+              <span class="percentageclass">%</span>
+            </td>
+            <td>
+              <span class='parent-font'><?php echo $wedaudusdwin .'-'.$wedaudusdloss; ?></span>
+              <span class="child-font"> <?php echo round($wedaudusdwin/ ($wedaudusdwin+$wedaudusdloss)*100).'-'.round($wedaudusdloss/ ($wedaudusdwin+$wedaudusdloss)*100); ?></span>
+              <span class="percentageclass">%</span>
+            </td>
+            
+            <td>
+              <span class='parent-font'><?php echo $thuaudusdwin .'-'.$thuaudusdloss; ?></span>
+              <span class="child-font"> <?php echo round($thuaudusdwin/ ($thuaudusdwin+$thuaudusdloss)*100).'-'.round($thuaudusdloss/ ($thuaudusdwin+$thuaudusdloss)*100); ?></span>
+              <span class="percentageclass">%</span>
+            </td>
+            <td>
+              <span class='parent-font'><?php echo $friaudusdwin .'-'.$friaudusdloss; ?></span>
+              <span class="child-font"> <?php echo round($friaudusdwin/ ($friaudusdwin+$friaudusdloss)*100).'-'.round($friaudusdloss/ ($friaudusdwin+$friaudusdloss)*100); ?></span>
+              <span class="percentageclass">%</span>
+            </td>
+          </tr>
+          <tr>
+            <td>EUR GBP</td>
+            <td>
+              <span class='parent-font'><?php echo $eurgbpwin .'-'.$eurgbploss; ?></span>
+              <span class="child-font"> <?php echo round($eurgbpwin/ ($eurgbpwin+$eurgbploss)*100).'-'.round($eurgbploss/ ($eurgbpwin+$eurgbploss)*100); ?></span>
+              <span class="percentageclass">%</span>
+            </td>
+            <td>
+              <span class='parent-font'><?php echo $moneurgbpwin .'-'.$moneurgbploss; ?></span>
+              <span class="child-font"> <?php echo round($moneurgbpwin/ ($moneurgbpwin+$moneurgbploss)*100).'-'.round($moneurgbploss/ ($moneurgbpwin+$moneurgbploss)*100); ?></span>
+              <span class="percentageclass">%</span>
+            </td>
+            <td>
+              <span class='parent-font'><?php echo $tueeurgbpwin .'-'.$tueeurgbploss; ?></span>
+              <span class="child-font"> <?php echo round($tueeurgbpwin/ ($tueeurgbpwin+$tueeurgbploss)*100).'-'.round($tueeurgbploss/ ($tueeurgbpwin+$tueeurgbploss)*100); ?></span>
+              <span class="percentageclass">%</span>
+            </td>
+            <td>
+              <span class='parent-font'><?php echo $wedeurgbpwin .'-'.$wedeurgbploss; ?></span>
+              <span class="child-font"> <?php echo round($wedeurgbpwin/ ($wedeurgbpwin+$wedeurgbploss)*100).'-'.round($wedeurgbploss/ ($wedeurgbpwin+$wedeurgbploss)*100); ?></span>
+              <span class="percentageclass">%</span>
+            </td>
+            
+            <td>
+              <span class='parent-font'><?php echo $thueurgbpwin .'-'.$thueurgbploss; ?></span>
+              <span class="child-font"> <?php echo round($thueurgbpwin/ ($thueurgbpwin+$thueurgbploss)*100).'-'.round($thueurgbploss/ ($thueurgbpwin+$thueurgbploss)*100); ?></span>
+              <span class="percentageclass">%</span>
+            </td>
+            <td>
+              <span class='parent-font'><?php echo $frieurgbpwin .'-'.$frieurgbploss; ?></span>
+              <span class="child-font"> <?php echo round($frieurgbpwin/ ($frieurgbpwin+$frieurgbploss)*100).'-'.round($frieurgbploss/ ($frieurgbpwin+$frieurgbploss)*100); ?></span>
+              <span class="percentageclass">%</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="container">
+      <br>
+      <br>
+      <table class="table ">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Total</th>
+            <th>Sat</th>
+             
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>EUR USD-OTC</td>
+            <td>
+              <span class='parent-font'><?php echo $eurusdotcwin .'-'.$eurusdotcloss; ?></span>
+              <span class="child-font"> <?php echo round($eurusdotcwin/ ($eurusdotcwin+$eurusdotcloss)*100).'-'.round($eurusdotcloss/ ($eurusdotcwin+$eurusdotcloss)*100); ?></span>
+              <span class="percentageclass">%</span>
+            </td>
+            <td>
+              <span class='parent-font'><?php echo $sateurusdotcwin .'-'.$sateurusdotcloss; ?></span>
+              <span class="child-font"> <?php echo round($sateurusdotcwin/ ($sateurusdotcwin+$sateurusdotcloss)*100).'-'.round($sateurusdotcloss/ ($sateurusdotcwin+$sateurusdotcloss)*100); ?></span>
+              <span class="percentageclass">%</span>
+            </td>
+            <td>
+               
+               
+              <span class="percentageclass">%</span>
+            </td>
+          </tr>
+          <tr>
+            <td>GBP USD-OTC</td>
+            <td>
+              <span class='parent-font'><?php echo $gbpusdotcwin .'-'.$gbpusdotcloss; ?></span>
+              <span class="child-font"> <?php echo round($gbpusdotcwin/ ($gbpusdotcwin+$gbpusdotcloss)*100).'-'.round($gbpusdotcloss/ ($gbpusdotcwin+$gbpusdotcloss)*100); ?></span>
+              <span class="percentageclass">%</span>
+            </td>
+            <td>
+               <span class='parent-font'><?php echo $satgbpusdotcwin .'-'.$satgbpusdotcloss; ?></span>
+               <span class="child-font"> <?php echo round($satgbpusdotcwin/ ($satgbpusdotcwin+$satgbpusdotcloss)*100).'-'.round($satgbpusdotcloss/ ($satgbpusdotcwin+$satgbpusdotcloss)*100); ?></span>
+              <span class="percentageclass">%</span>
+            </td>
+            <td>
+                
+                
+              <span class="percentageclass">%</span>
+            </td>
+          </tr>
+          <tr>
+            <td>USD CHF-OTC</td>
+            <td>
+              <span class='parent-font'><?php echo $usdchfotcwin .'-'.$usdchfotcloss; ?></span>
+              <span class="child-font"> <?php echo round($usdchfotcwin/ ($usdchfotcwin+$usdchfotcloss)*100).'-'.round($usdchfotcloss/ ($usdchfotcwin+$usdchfotcloss)*100); ?></span>
+              <span class="percentageclass">%</span>
+            </td>
+            <td>
+              <span class='parent-font'><?php echo $satusdchfotcwin .'-'.$satusdchfotcloss; ?></span>
+              <span class="child-font"> <?php echo round($satusdchfotcwin/ ($satusdchfotcwin+$satusdchfotcloss)*100).'-'.round($satusdchfotcloss/ ($satusdchfotcwin+$satusdchfotcloss)*100); ?></span>
+              <span class="percentageclass">%</span>
+            </td>
+            <td>
+               
+               
+              <span class="percentageclass">%</span>
+            </td>
+          </tr>
+          <tr>
+            <td>NZD USD-OTC</td>
+            <td>
+              <span class='parent-font'><?php echo $nzdusdotcwin .'-'.$nzdusdotcloss; ?></span>
+              <span class="child-font"> <?php echo round($nzdusdotcwin/ ($nzdusdotcwin+$nzdusdotcloss)*100).'-'.round($nzdusdotcloss/ ($nzdusdotcwin+$nzdusdotcloss)*100); ?></span>
+              <span class="percentageclass">%</span>
+            </td>
+            <td>
+              <span class='parent-font'><?php echo $satnzdusdotcwin .'-'.$satnzdusdotcloss; ?></span>
+              <span class="child-font"> <?php echo round($satnzdusdotcwin/ ($satnzdusdotcwin+$satnzdusdotcloss)*100).'-'.round($satnzdusdotcloss/ ($satnzdusdotcwin+$satnzdusdotcloss)*100); ?></span>
+              <span class="percentageclass">%</span>
+            </td>
+            <td>
+               
+               
+              <span class="percentageclass">%</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+      <br>
+      <a href="index.php" class="btn btn-danger" role="button">Details Results</a>
+    </div>
+  </body>
 </html>
