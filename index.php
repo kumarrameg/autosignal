@@ -1,10 +1,9 @@
 <?php 
-        
-    // $servername = "sql6.freesqldatabase.com";
-    // $username = "sql6513929";
-    // $password = "A9ACvaXjXS";
-    // $dbname = "sql6513929";
-    include('dbconnect.php');
+
+    $servername = "database-1.cbeiyy7nwxcu.us-west-2.rds.amazonaws.com";
+    $username = "kumarrameg";
+    $password = "39B!3vrKPzA$";
+    $dbname = "parisdetail";
     error_reporting(E_ERROR | E_PARSE);
         
         
@@ -12,9 +11,9 @@
         
         
         
-        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail"));
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result != 'Waiting' "));
         $toalSignals=$values['total'];
-        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' "));
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where ( result='win'  or result='onestepWIN') "));
         $winsignal=$values['total'];
          $winsignalpercentage=round($winsignal/$toalSignals *100);
         $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' "));
@@ -31,54 +30,54 @@
 
 
         // tabkee 1 conten
-        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='EURUSD' "));
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where ( result='win'  or result='onestepWIN') and pair='EURUSD' "));
         $eurusdwin=$values['total'];
         $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='EURUSD' "));
         $eurusdloss=$values['total'];
 
-        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='GBPUSD' "));
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where ( result='win'  or result='onestepWIN') and pair='GBPUSD' "));
         $gbpusdwin=$values['total'];
         $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='GBPUSD' "));
         $gbpusdloss=$values['total'];
         
-        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='USDJPY' "));
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where ( result='win'  or result='onestepWIN') and pair='USDJPY' "));
         $usdjpywin=$values['total'];
         $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='USDJPY' "));
         $usdjpyloss=$values['total'];
 
-        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='AUDUSD' "));
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where ( result='win'  or result='onestepWIN') and pair='AUDUSD' "));
         $audusdwin=$values['total'];
         $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='AUDUSD' "));
         $audusdloss=$values['total'];
 
-        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='EURGBP' "));
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where ( result='win'  or result='onestepWIN') and pair='EURGBP' "));
         $eurgbpwin=$values['total'];
         $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='EURGBP' "));
         $eurgbploss=$values['total'];
 
 
         // monday
-        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='EURUSD' and currentday='Mon' "));
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where ( result='win'  or result='onestepWIN') and pair='EURUSD' and currentday='Mon' "));
         $moneurusdwin=$values['total'];
         $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='EURUSD' and currentday='Mon' "));
         $moneurusdloss=$values['total'];
 
-        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='GBPUSD' and currentday='Mon' "));
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where ( result='win'  or result='onestepWIN') and pair='GBPUSD' and currentday='Mon' "));
         $mongbpusdwin=$values['total'];
         $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='GBPUSD' and currentday='Mon' "));
         $mongbpusdloss=$values['total'];
         
-        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='USDJPY' and currentday='Mon' "));
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where ( result='win'  or result='onestepWIN') and pair='USDJPY' and currentday='Mon' "));
         $monusdjpywin=$values['total'];
         $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='USDJPY' and currentday='Mon' "));
         $monusdjpyloss=$values['total'];
 
-        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='AUDUSD' and currentday='Mon' "));
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where ( result='win'  or result='onestepWIN') and pair='AUDUSD' and currentday='Mon' "));
         $monaudusdwin=$values['total'];
         $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='AUDUSD' and currentday='Mon' "));
         $monaudusdloss=$values['total'];
 
-        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='EURGBP' and currentday='Mon' "));
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where ( result='win'  or result='onestepWIN') and pair='EURGBP' and currentday='Mon' "));
         $moneurgbpwin=$values['total'];
         $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='EURGBP' and currentday='Mon' "));
         $moneurgbploss=$values['total'];
@@ -86,152 +85,152 @@
 
 
             // Tue
-            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='EURUSD' and currentday='Tue' "));
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where ( result='win'  or result='onestepWIN') and pair='EURUSD' and currentday='Tue' "));
             $tueeurusdwin=$values['total'];
             $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='EURUSD' and currentday='Tue' "));
             $tueeurusdloss=$values['total'];
     
-            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='GBPUSD' and currentday='Tue' "));
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where ( result='win'  or result='onestepWIN') and pair='GBPUSD' and currentday='Tue' "));
             $tuegbpusdwin=$values['total'];
             $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='GBPUSD' and currentday='Tue' "));
             $tuegbpusdloss=$values['total'];
             
-            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='USDJPY' and currentday='Tue' "));
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where ( result='win'  or result='onestepWIN') and pair='USDJPY' and currentday='Tue' "));
             $tueusdjpywin=$values['total'];
             $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='USDJPY' and currentday='Tue' "));
             $tueusdjpyloss=$values['total'];
     
-            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='AUDUSD' and currentday='Tue' "));
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where ( result='win'  or result='onestepWIN') and pair='AUDUSD' and currentday='Tue' "));
             $tueaudusdwin=$values['total'];
             $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='AUDUSD' and currentday='Tue' "));
             $tueaudusdloss=$values['total'];
     
-            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='EURGBP' and currentday='Tue' "));
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where ( result='win'  or result='onestepWIN') and pair='EURGBP' and currentday='Tue' "));
             $tueeurgbpwin=$values['total'];
             $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='EURGBP' and currentday='Tue' "));
             $tueeurgbploss=$values['total'];
             // Tue end
 
             // wed
-            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='EURUSD' and currentday='Wed' "));
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where ( result='win'  or result='onestepWIN') and pair='EURUSD' and currentday='Wed' "));
             $wedeurusdwin=$values['total'];
             $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='EURUSD' and currentday='Wed' "));
             $wedeurusdloss=$values['total'];
     
-            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='GBPUSD' and currentday='Wed' "));
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where ( result='win'  or result='onestepWIN') and pair='GBPUSD' and currentday='Wed' "));
             $wedgbpusdwin=$values['total'];
             $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='GBPUSD' and currentday='Wed' "));
             $wedgbpusdloss=$values['total'];
             
-            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='USDJPY' and currentday='Wed' "));
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where ( result='win'  or result='onestepWIN') and pair='USDJPY' and currentday='Wed' "));
             $wedusdjpywin=$values['total'];
             $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='USDJPY' and currentday='Wed' "));
             $wedusdjpyloss=$values['total'];
     
-            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='AUDUSD' and currentday='Wed' "));
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where ( result='win'  or result='onestepWIN') and pair='AUDUSD' and currentday='Wed' "));
             $wedaudusdwin=$values['total'];
             $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='AUDUSD' and currentday='Wed' "));
             $wedaudusdloss=$values['total'];
     
-            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='EURGBP' and currentday='Wed' "));
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where ( result='win'  or result='onestepWIN') and pair='EURGBP' and currentday='Wed' "));
             $wedeurgbpwin=$values['total'];
             $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='EURGBP' and currentday='Wed' "));
             $wedeurgbploss=$values['total'];
             // wed end
 
             // thu
-            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='EURUSD' and currentday='Thu' "));
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where ( result='win'  or result='onestepWIN') and pair='EURUSD' and currentday='Thu' "));
             $thueurusdwin=$values['total'];
             $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='EURUSD' and currentday='Thu' "));
             $thueurusdloss=$values['total'];
     
-            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='GBPUSD' and currentday='Thu' "));
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where ( result='win'  or result='onestepWIN') and pair='GBPUSD' and currentday='Thu' "));
             $thugbpusdwin=$values['total'];
             $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='GBPUSD' and currentday='Thu' "));
             $thugbpusdloss=$values['total'];
             
-            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='USDJPY' and currentday='Thu' "));
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where ( result='win'  or result='onestepWIN') and pair='USDJPY' and currentday='Thu' "));
             $thuusdjpywin=$values['total'];
             $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='USDJPY' and currentday='Thu' "));
             $thuusdjpyloss=$values['total'];
     
-            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='AUDUSD' and currentday='Thu' "));
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where ( result='win'  or result='onestepWIN') and pair='AUDUSD' and currentday='Thu' "));
             $thuaudusdwin=$values['total'];
             $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='AUDUSD' and currentday='Thu' "));
             $thuaudusdloss=$values['total'];
     
-            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='EURGBP' and currentday='Thu' "));
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where ( result='win'  or result='onestepWIN') and pair='EURGBP' and currentday='Thu' "));
             $thueurgbpwin=$values['total'];
             $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='EURGBP' and currentday='Thu' "));
             $thueurgbploss=$values['total'];
             // thu end
 
             // fri
-            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='EURUSD' and currentday='Fri' "));
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where ( result='win'  or result='onestepWIN') and pair='EURUSD' and currentday='Fri' "));
             $frieurusdwin=$values['total'];
             $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='EURUSD' and currentday='Fri' "));
             $frieurusdloss=$values['total'];
     
-            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='GBPUSD' and currentday='Fri' "));
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where ( result='win'  or result='onestepWIN') and pair='GBPUSD' and currentday='Fri' "));
             $frigbpusdwin=$values['total'];
             $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='GBPUSD' and currentday='Fri' "));
             $frigbpusdloss=$values['total'];
             
-            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='USDJPY' and currentday='Fri' "));
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where ( result='win'  or result='onestepWIN') and pair='USDJPY' and currentday='Fri' "));
             $friusdjpywin=$values['total'];
             $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='USDJPY' and currentday='Fri' "));
             $friusdjpyloss=$values['total'];
     
-            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='AUDUSD' and currentday='Fri' "));
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where ( result='win'  or result='onestepWIN') and pair='AUDUSD' and currentday='Fri' "));
             $friaudusdwin=$values['total'];
             $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='AUDUSD' and currentday='Fri' "));
             $friaudusdloss=$values['total'];
     
-            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='EURGBP' and currentday='Fri' "));
+            $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where ( result='win'  or result='onestepWIN') and pair='EURGBP' and currentday='Fri' "));
             $frieurgbpwin=$values['total'];
             $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='EURGBP' and currentday='Fri' "));
             $frieurgbploss=$values['total'];
             // fri end
 
 
-        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='EURUSD-OTC' "));
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where ( result='win'  or result='onestepWIN') and pair='EURUSD-OTC' "));
         $eurusdotcwin=$values['total'];
         $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='EURUSD-OTC' "));
         $eurusdotcloss=$values['total'];
         
-        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='GBPUSD-OTC' "));
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where ( result='win'  or result='onestepWIN') and pair='GBPUSD-OTC' "));
         $gbpusdotcwin=$values['total'];
         $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='GBPUSD-OTC' "));
         $gbpusdotcloss=$values['total'];
 
-        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='USDCHF-OTC' "));
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where ( result='win'  or result='onestepWIN') and pair='USDCHF-OTC' "));
         $usdchfotcwin=$values['total'];
         $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='USDCHF-OTC' "));
         $usdchfotcloss=$values['total'];
 
-        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='NZDUSD-OTC' "));
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where ( result='win'  or result='onestepWIN') and pair='NZDUSD-OTC' "));
         $nzdusdotcwin=$values['total'];
         $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='NZDUSD-OTC' "));
         $nzdusdotcloss=$values['total'];
 
 
         // sat
-        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='EURUSD-OTC' and currentday='Sat'  "));
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where ( result='win'  or result='onestepWIN') and pair='EURUSD-OTC' and currentday='Sat'  "));
         $sateurusdotcwin=$values['total'];
         $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='EURUSD-OTC' and currentday='Sat'  "));
         $sateurusdotcloss=$values['total'];
         
-        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='GBPUSD-OTC' and currentday='Sat'  "));
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where ( result='win'  or result='onestepWIN') and pair='GBPUSD-OTC' and currentday='Sat'  "));
         $satgbpusdotcwin=$values['total'];
         $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='GBPUSD-OTC' and currentday='Sat'  "));
         $satgbpusdotcloss=$values['total'];
 
-        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='USDCHF-OTC' and currentday='Sat'  "));
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where ( result='win'  or result='onestepWIN') and pair='USDCHF-OTC' and currentday='Sat'  "));
         $satusdchfotcwin=$values['total'];
         $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='USDCHF-OTC' and currentday='Sat'  "));
         $satusdchfotcloss=$values['total'];
 
-        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='win' and pair='NZDUSD-OTC' and currentday='Sat'  "));
+        $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where ( result='win'  or result='onestepWIN') and pair='NZDUSD-OTC' and currentday='Sat'  "));
         $satnzdusdotcwin=$values['total'];
         $values=mysqli_fetch_assoc(mysqli_query($conn,"SELECT count(*) as total FROM parisdetail where result='loss' and pair='NZDUSD-OTC' and currentday='Sat'  "));
         $satnzdusdotcloss=$values['total'];
