@@ -1,9 +1,9 @@
 <meta http-equiv="Cache-Control" content="no-cache" />
 <meta http-equiv="Pragma" content="no-cache" />
-<meta http-equiv="Expires" content="0" />
 <h2 class="details" style="color: red"></h2>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <h1 id="displaysignal"></h1>
+<meta http-equiv="Expires" content="0" />
   <script> 
 //        ram();
 //   (function () {
@@ -354,33 +354,33 @@
         
         
         
-        // $.ajax({
-        //     url: 'insertdb.php',            
-        //     type: "POST",
-        //     data: {genraedSignals:stringList2,day:day,todayDate:todayDate},
-        //     success: function (result) {     
-        //       if(result == true){
+        $.ajax({
+            url: 'insertdb.php',            
+            type: "POST",
+            data: {genraedSignals:stringList2,day:day,todayDate:todayDate},
+            success: function (result) {     
+              if(result == true){
                 
-        //         var xhttp = new XMLHttpRequest();                    
-        //           xhttp.open(
-        //             "GET",
-        //             "https://api.telegram.org/bot5455276964:AAFLB-A_Jc88A7ZlPQoN7CF6utmKu8QoO-E/sendMessage?chat_id=@purpleplusram&text=" +
-        //               stringList2,
-        //             true
-        //           );
+                var xhttp = new XMLHttpRequest();                    
+                  xhttp.open(
+                    "GET",
+                    "https://api.telegram.org/bot5455276964:AAFLB-A_Jc88A7ZlPQoN7CF6utmKu8QoO-E/sendMessage?chat_id=@purpleplusram&text=" +
+                      stringList2,
+                    true
+                  );
 
-        //           xhttp.send();
-        //           localStorage.clear();
-        //       }else{
+                  xhttp.send();
+                  localStorage.clear();
+              }else{
                 
-        //         console.log('error::'+result);
-        //       }
+                console.log('error::'+result);
+              }
               
-        //     },
-        //     error: function (error) {
-        //       ErrorHistoric(error);
-        //     },
-        //   });
+            },
+            error: function (error) {
+              ErrorHistoric(error);
+            },
+          });
                var obj = $("#displaysignal").text(stringList2);
         obj.html(obj.html().replace(/%0a/g,'<br/>'));
       }
