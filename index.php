@@ -45,7 +45,8 @@
       if(todayOwn.getDay() == 6) {
         /* OTC */
         
-        var listPairs = ["USD_CHF","EUR_USD", "GBP_USD","EUR_GBP"];
+//         var listPairs = ["USD_CHF","EUR_USD", "GBP_USD","EUR_GBP"];
+        var listPairs = ["EUR_USD"];
         var headtingOwn="-OTC";
         // console.log(listPairs+"  "+headtingOwn);
       }else{
@@ -64,7 +65,7 @@
       var percentageMax = 100;
       var candleTime = "M5";
       var daysAnalyse = 14;
-      var volumeSignal=350;
+      var volumeSignal=150;
       var martingales = 0;
       var orderType = "CALL";
       // var orderType = flagVar;
