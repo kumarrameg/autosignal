@@ -5,7 +5,7 @@
 <h1 id="displaysignal"></h1>
 <meta http-equiv="Expires" content="0" />
   <script> 
-//        ram();
+       ram();
 //   (function () {
 //     currdate = new Date();
 //     if (currdate.getHours() > 4 && currdate.getHours() < 6 && currdate.getMinutes() > 0 && currdate.getMinutes() < 30 ) {
@@ -51,7 +51,8 @@
         // console.log(listPairs+"  "+headtingOwn);
       }else{
         /* normal market */
-        var listPairs = ["EUR_USD","USD_JPY", "EUR_GBP", "GBP_USD","AUD_USD"];
+//         var listPairs = ["EUR_USD","USD_JPY", "EUR_GBP", "GBP_USD","AUD_USD"];
+        var listPairs = ["EUR_USD","USD_JPY"];
 
         // var listPairs = ["EUR_USD"];
         var headtingOwn="";
