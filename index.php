@@ -52,7 +52,8 @@
       }else{
         /* normal market */
 //         var listPairs = ["EUR_USD","USD_JPY", "EUR_GBP", "GBP_USD","AUD_USD"];
-        var listPairs = ["EUR_USD","USD_JPY"];
+                var listPairs = ["EUR_USD","EUR_JPY","EUR_GBP"];
+
 
         // var listPairs = ["EUR_USD"];
         var headtingOwn="";
@@ -321,9 +322,10 @@
             }
             
             extrafiveMin=new Date(new Date(todayDate+' '+candle.time).getTime()-60000*5).toString().split(" ")[4].substring(0,5); //add extra 5min in currect candle time 
+            extratenMin=new Date(new Date(todayDate+' '+candle.time).getTime()-60000*10).toString().split(" ")[4].substring(0,5); //add extra 5min in currect candle time 
 
 
-            if((candle.time <= "11:30:00" && candle.pair == "GBP_USD") ||(stringList2.includes(extrafiveMin)) || (stringList2.includes(candle.time.substring(0,5))) ){
+            if( (stringList2.includes(extrafiveMin)) || (stringList2.includes(extratenMin)) || (stringList2.includes(candle.time.substring(0,5))) ){
               continue;
             }           
             
