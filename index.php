@@ -52,7 +52,7 @@
       }else{
         /* normal market */
 //         var listPairs = ["EUR_USD","USD_JPY", "EUR_GBP", "GBP_USD","AUD_USD"];
-                var listPairs = ["EUR_USD","EUR_JPY","EUR_GBP"];
+                var listPairs = ["EUR_USD","EUR_GBP"];
 
 
         // var listPairs = ["EUR_USD"];
