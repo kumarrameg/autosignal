@@ -5,7 +5,7 @@
 <h1 id="displaysignal"></h1>
 <meta http-equiv="Expires" content="0" />
   <script> 
-       ram();
+//        ram();
 //   (function () {
 //     currdate = new Date();
 //     if (currdate.getHours() > 4 && currdate.getHours() < 6 && currdate.getMinutes() > 0 && currdate.getMinutes() < 30 ) {
@@ -21,11 +21,11 @@
 //     setTimeout(arguments.callee, 1000 *60 * 30);
 //   })();
 
-    // ram("CALL",0);    
-    // var listBestPairTimesbackup = [];
-    // function ram(flagVar,flagval){
+    ram("CALL",0);    
+    var listBestPairTimesbackup = [];
+    function ram(flagVar,flagval){
       
-    function  ram(){
+//     function  ram(){
       var todayDate = new Date().toISOString().slice(0, 10);
       hoje = new Date();
 
@@ -51,8 +51,8 @@
         // console.log(listPairs+"  "+headtingOwn);
       }else{
         /* normal market */
-//         var listPairs = ["EUR_USD","USD_JPY", "EUR_GBP", "GBP_USD","AUD_USD"];
-                var listPairs = ["EUR_USD","EUR_GBP"];
+        var listPairs = ["EUR_USD","USD_JPY", "EUR_GBP", "GBP_USD","AUD_USD"];
+//                 var listPairs = ["EUR_USD","EUR_GBP"];
 
 
         // var listPairs = ["EUR_USD"];
@@ -67,11 +67,11 @@
       var percentageMax = 100;
       var candleTime = "M5";
       var daysAnalyse = 14;
-      var volumeSignal=150;
+      var volumeSignal=100;
       var martingales = 0;
-      var orderType = "CALL";
-      // var orderType = flagVar;
-      var timeInit = 9;
+//       var orderType = "CALL";
+      var orderType = flagVar;
+      var timeInit = 6;
       var timeEnd = 17;
       var cbAtivo=0;
 
@@ -287,14 +287,14 @@
         
         listBestPairTimes.sort((a, b) => (a.time > b.time ? 1 : -1));       
         
-        // if(flagval == 0){
-        //   listBestPairTimesbackup=listBestPairTimes;
-        //   ram("PUT",1);return false;
-        // }else{
-        //   listBestPairTimesbackup =listBestPairTimesbackup.concat(listBestPairTimes);
-        // }
-        // listBestPairTimesbackup.sort((a, b) => (a.time > b.time ? 1 : -1));
-        // listBestPairTimes=listBestPairTimesbackup;
+        if(flagval == 0){
+          listBestPairTimesbackup=listBestPairTimes;
+          ram("PUT",1);return false;
+        }else{
+          listBestPairTimesbackup =listBestPairTimesbackup.concat(listBestPairTimes);
+        }
+        listBestPairTimesbackup.sort((a, b) => (a.time > b.time ? 1 : -1));
+        listBestPairTimes=listBestPairTimesbackup;
         
         
         var listNumber = listBestPairTimes.length / 80;
